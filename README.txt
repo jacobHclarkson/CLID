@@ -6,6 +6,7 @@ A simple program that allows you to get the definition of a word in the command 
 
 
 Installation:
+    javac Dict.java
     jar cfm CLID.jar Manifest.txt *.class
     mkdir ~/bin
     mv CLID.jar ~/bin
