@@ -11,6 +11,9 @@ Installation:
     mkdir ~/bin
     mv CLID.jar ~/bin
     alias define="java -jar ~/bin/CLID.jar"
+    
+    NOTE: to make the alias permanent, you will need to add the last line above the appropriate rc file (eg .bash_aliases for     bash)
 
 Usage:
     Type "define word" where "word" is the word you want to look up. Hit enter.
+    If nothing happens, the word you entered is not in the dictionary.
