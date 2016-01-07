@@ -37,6 +37,17 @@ public class Dict {
     // parse xml from merriam-webster api and print results
     public static void grab(Document doc) {
         doc.getDocumentElement().normalize();
+        
+        // get suggestions if the word is not found and print them out
+        NodeList suggestionList = doc.getElementsByTagName("suggestion");
+        if(suggestionList.getLength() > 0)
+            System.out.println("\nNo matches found. Did you mean:\n");
+        for(int i=0; i<suggestionList.getLength(); i++) {
+            Node suggestion = suggestionList.item(i);
+            if(suggestion.getNodeType() == Node.ELEMENT_NODE) {
+                System.out.println(suggestion.getTextContent());
+            }
+        }
 
         // get every entry for the word
         NodeList entryList = doc.getElementsByTagName("entry");
