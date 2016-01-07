@@ -10,6 +10,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
+import java.util.ArrayList;
 
 public class Dict {
     public static void main(String[]args) {
@@ -55,25 +56,40 @@ public class Dict {
         // for each entry
         for(int i=0; i<entryList.getLength(); i++) {
             Node node = entryList.item(i);
+            String word = "";
+            String fl = "";
+            String pr = "";
+            ArrayList<String> defs = new ArrayList<String>();
             if(node.getNodeType() == Node.ELEMENT_NODE){
                 Element eElement = (Element) node;
-                System.out.println("\n" + eElement.getAttribute("id")); // get the entry
+                word = eElement.getAttribute("id");
+                
                 NodeList defList = node.getChildNodes();
 
 
+                //examine entry
                 for(int j=0; j<defList.getLength(); j++) {
                     Node child = defList.item(j);
                     if(child.getNodeType() == Node.ELEMENT_NODE) {
+
+                        // get funtion label (part of speech)
+                        if(child.getNodeName() == "fl") {
+                            fl = child.getTextContent();
+                        }
+                        // get pronunciation
+                        if(child.getNodeName() == "pr") {
+                            pr = child.getTextContent();
+                        }
+
+                        // get each definition                            
                         if(child.getNodeName() == "def") {
                             NodeList dtList = child.getChildNodes();
-                           
-
-                            // get each definition                            
                             for(int k=0; k<dtList.getLength(); k++) {
                                 Node dt = dtList.item(k);
                                 if(dt.getNodeType() == Node.ELEMENT_NODE) {
                                     if(dt.getNodeName() == "dt") {
-                                        System.out.println(dt.getTextContent());
+                                        if(!dt.getTextContent().equals(""))
+                                            defs.add(dt.getTextContent());
                                     }
                                 }
                             }
@@ -81,7 +97,21 @@ public class Dict {
                     }
                 }
             }
+
+            // print out all information
+            String underline = new String(new char[word.length()]).replace("\0", "-");
+            String info = "";
+            if(!fl.equals(""))
+                info = info + fl;
+            if(!info.equals("") && !pr.equals(""))
+                info = info + "   |   \\" + pr + "\\";
+            System.out.println("\n" + word + "   [ " + info + " ]");
+            System.out.println(underline);
+            if(!defs.isEmpty()) {
+                for(int a=0; a<defs.size(); a++) {
+                    System.out.println(defs.get(a));
+                }
+            }
         }
     }
 }
-
