@@ -16,4 +16,3 @@ Installation:
 
 Usage:
     Type "define word" where "word" is the word you want to look up. Hit enter.
-    If nothing happens, the word you entered is not in the dictionary.
